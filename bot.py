@@ -11,7 +11,7 @@ bot = commands.Bot(command_prefix='!', intents=intents)
 @bot.event
 async def on_ready():
     print(f'Giriş yapıldı:  {bot.user.name}')
-    
+
 @bot.event
 async def on_member_join(member):
     # Karşılama mesajı gönderme
@@ -30,6 +30,13 @@ async def ban(ctx, member: discord.Member = None):
         await ctx.send(f"Kullanıcı {member.name} banlandı")
     else:
         await ctx.send("Bu komut banlamak istediğiniz kullanıcıyı işaret etmelidir. Örneğin: `!ban @user`")
+
+@bot.command()
+async def poll(ctx, *, question):
+    message = await ctx.send(f"🗳️ Oylama: {question}")
+    await message.add_reaction("👍")
+    await message.add_reaction("👎")
+    await message.add_reaction("🤷")
 
 @ban.error
 async def ban_error(ctx, error):
